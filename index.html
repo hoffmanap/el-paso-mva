@@ -18,6 +18,7 @@
   --line:#d8d2c0;
   --card-bg:#ffffff;
   --mA:#163a5c; --mB:#2f6b8a; --mC:#5fa3a0; --mD:#e8c158; --mE:#d98a3d; --mF:#b5452f;
+  --insuff-fill:#8a8f97; --insuff-line:#eceff2;
   color-scheme: light;
 }
 @media (prefers-color-scheme: dark){
@@ -80,6 +81,8 @@ header{
 .leg-sw{width:14px; height:14px; border-radius:3px; flex:0 0 auto}
 .leg-label{color:var(--ink); font-weight:600; font-size:12.5px}
 .leg-n{margin-left:auto; color:var(--ink-dim); font-variant-numeric:tabular-nums; font-size:11.5px}
+.leg-divider{height:1px; background:var(--line); margin:6px 0}
+.leg-sw-hatch{background-image:repeating-linear-gradient(45deg, var(--ink-dim) 0 1.5px, transparent 1.5px 4px); background-color:var(--insuff-fill); opacity:.8}
 
 #statbar{
   position:absolute; top:12px; right:max(12px, env(safe-area-inset-right,0px)); z-index:20;
@@ -252,25 +255,60 @@ function resolveVar(name){
 }
 ['--mA','--mB','--mC','--mD','--mE','--mF'].forEach((v,i)=>{ TYPE_HEX[ORDER[i]] = resolveVar(v); });
 
-const map = L.map('map', {zoomControl:false, attributionControl:false}).setView([31.76, -106.42], 10.4);
+const map = L.map('map', {zoomControl:false, attributionControl:false, renderer: L.svg()}).setView([31.76, -106.42], 10.4);
 L.control.zoom({position:'topright'}).addTo(map);
-L.control.attribution({prefix:false, position:'bottomright'}).addAttribution('TIGER/ACS/MLS/permit data via public &amp; project sources').addTo(map);
+L.control.attribution({prefix:false, position:'bottomright'})
+  .addAttribution('Imagery &amp; labels &copy; Esri &middot; TIGER/ACS/MLS/permit data via public &amp; project sources')
+  .addTo(map);
+
+// Aerial basemap + a reference overlay for streets/place labels (Esri, no key required)
+L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+  maxZoom: 19, attribution: ''
+}).addTo(map);
+L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Reference/World_Boundaries_and_Places/MapServer/tile/{z}/{y}/{x}', {
+  maxZoom: 19, attribution: ''
+}).addTo(map);
+
+const INSUFF = 'X';
+const DISPLAY_ORDER = [...ORDER, INSUFF];
 
 let geo = null;
 let layer = null;
-const activeTypes = new Set(ORDER);
+const activeTypes = new Set(DISPLAY_ORDER);
+
+function ensureHatchPattern(){
+  const svg = map.getPane('overlayPane').querySelector('svg');
+  if(!svg || svg.querySelector('#hatchInsufficient')) return;
+  const ns = 'http://www.w3.org/2000/svg';
+  const defs = document.createElementNS(ns,'defs');
+  defs.innerHTML = `<pattern id="hatchInsufficient" patternUnits="userSpaceOnUse" width="7" height="7" patternTransform="rotate(45)">
+    <rect width="7" height="7" fill="${getComputedStyle(document.documentElement).getPropertyValue('--insuff-fill')}"></rect>
+    <line x1="0" y1="0" x2="0" y2="7" stroke="${getComputedStyle(document.documentElement).getPropertyValue('--insuff-line')}" stroke-width="2.2"></line>
+  </pattern>`;
+  svg.insertBefore(defs, svg.firstChild);
+}
 
 function fmt(n, d=0){ if(n===null||n===undefined||Number.isNaN(n)) return '—'; return Number(n).toLocaleString(undefined,{maximumFractionDigits:d, minimumFractionDigits:d}); }
 function fmtMoney(n){ if(n===null||n===undefined) return '—'; return '$'+Number(n).toLocaleString(undefined,{maximumFractionDigits:0}); }
 
 function styleFor(feature){
-  const t = feature.properties.market_type;
+  const sufficient = feature.properties.data_sufficient;
+  const t = sufficient ? feature.properties.market_type : INSUFF;
   const on = activeTypes.has(t);
+  if(!sufficient){
+    return {
+      fillColor: 'url(#hatchInsufficient)',
+      weight: 0.6,
+      color: 'rgba(0,0,0,.3)',
+      fillOpacity: on ? 0.75 : 0.06,
+      opacity: on ? 1 : 0.15
+    };
+  }
   return {
     fillColor: TYPE_HEX[t] || '#999',
     weight: 0.6,
     color: 'rgba(0,0,0,.25)',
-    fillOpacity: on ? 0.82 : 0.06,
+    fillOpacity: on ? 0.72 : 0.06,
     opacity: on ? 1 : 0.15
   };
 }
@@ -285,7 +323,7 @@ function renderLegend(counts, total){
       <span class="leg-label">${t} &middot; ${TYPE_LABEL[t]}</span>
       <span class="leg-n">${counts[t]||0}</span>`;
     row.onclick = ()=>{
-      if(activeTypes.has(t) && activeTypes.size===1){ ORDER.forEach(x=>activeTypes.add(x)); }
+      if(activeTypes.has(t) && activeTypes.size===1){ DISPLAY_ORDER.forEach(x=>activeTypes.add(x)); }
       else if(activeTypes.has(t)){ activeTypes.delete(t); }
       else { activeTypes.add(t); }
       layer.setStyle(styleFor);
@@ -293,6 +331,22 @@ function renderLegend(counts, total){
     };
     el.appendChild(row);
   });
+  const divider = document.createElement('div');
+  divider.className = 'leg-divider';
+  el.appendChild(divider);
+  const xrow = document.createElement('div');
+  xrow.className = 'leg-row' + (activeTypes.has(INSUFF) ? '' : ' dim');
+  xrow.innerHTML = `<span class="leg-sw leg-sw-hatch"></span>
+    <span class="leg-label">Insufficient data</span>
+    <span class="leg-n">${counts[INSUFF]||0}</span>`;
+  xrow.onclick = ()=>{
+    if(activeTypes.has(INSUFF) && activeTypes.size===1){ DISPLAY_ORDER.forEach(x=>activeTypes.add(x)); }
+    else if(activeTypes.has(INSUFF)){ activeTypes.delete(INSUFF); }
+    else { activeTypes.add(INSUFF); }
+    layer.setStyle(styleFor);
+    renderLegend(counts, total);
+  };
+  el.appendChild(xrow);
 }
 
 function renderStats(features){
@@ -319,13 +373,21 @@ function bar(label, pct, color, valText){
 function openPanel(p){
   const panel = document.getElementById('panel');
   document.getElementById('empty-hint').style.display = 'none';
-  document.getElementById('panel-type').textContent = p.market_type + ' · ' + TYPE_LABEL[p.market_type];
-  document.getElementById('panel-type').style.background = TYPE_HEX[p.market_type];
+  const sufficient = p.data_sufficient;
+  document.getElementById('panel-type').textContent = sufficient ? (p.market_type + ' · ' + TYPE_LABEL[p.market_type]) : 'Insufficient data';
+  document.getElementById('panel-type').style.background = sufficient ? TYPE_HEX[p.market_type] : 'var(--insuff-fill)';
   document.getElementById('panel-name').textContent = p.NAME + ', Tract ' + (p.tract ? p.tract.slice(-6).replace(/^0+/,'') : '');
-  document.getElementById('panel-sub').textContent = `${fmt(p.total_units_acs)} housing units · ${fmt(p.n_sales)} MLS sales in parent tract (2021–24)`;
+  const salesNote = p.n_sales_bg ? `${fmt(p.n_sales_bg)} geocoded sales, 2023–present` : 'no geocoded sales 2023–present';
+  document.getElementById('panel-sub').textContent = `${fmt(p.total_units_acs)} housing units · ${salesNote}`;
 
   const maxPpsf = 220, maxDom = 150, maxVac = 25, maxOwn = 100, maxPermit = 40, maxViol = 60;
-  document.getElementById('panel-body').innerHTML = `
+  const missingNote = (!sufficient && p.missing_indicators && p.missing_indicators.length)
+    ? `<div style="margin:0 0 12px; padding:9px 11px; background:var(--paper-dim); border-radius:8px; font-size:12px; color:var(--ink-dim)">
+         Missing from the clustering model: <strong style="color:var(--ink)">${p.missing_indicators.join(', ')}</strong>.
+         Shown below is whatever data does exist for this block group.
+       </div>`
+    : '';
+  document.getElementById('panel-body').innerHTML = missingNote + `
     <div class="metric-grid">
       <div class="metric"><div class="mv">${fmtMoney(p.median_ppsf)}</div><div class="ml">Median $ / sqft</div></div>
       <div class="metric"><div class="mv">${p.median_dom? fmt(p.median_dom)+'d':'—'}</div><div class="ml">Days on market</div></div>
@@ -358,8 +420,11 @@ document.getElementById('about').addEventListener('click', (e)=>{ if(e.target.id
 fetch('mva_map.geojson').then(r=>r.json()).then(data=>{
   geo = data;
   const counts = {};
-  ORDER.forEach(t=>counts[t]=0);
-  data.features.forEach(f=> counts[f.properties.market_type] = (counts[f.properties.market_type]||0)+1 );
+  DISPLAY_ORDER.forEach(t=>counts[t]=0);
+  data.features.forEach(f=>{
+    const key = f.properties.data_sufficient ? f.properties.market_type : INSUFF;
+    counts[key] = (counts[key]||0)+1;
+  });
 
   layer = L.geoJSON(data, {
     style: styleFor,
@@ -370,10 +435,13 @@ fetch('mva_map.geojson').then(r=>r.json()).then(data=>{
     }
   }).addTo(map);
 
+  ensureHatchPattern();
+  layer.setStyle(styleFor); // re-apply now that the hatch pattern exists
+
   try{ map.fitBounds(layer.getBounds(), {padding:[20,20]}); }catch(e){}
 
   renderLegend(counts, data.features.length);
-  renderStats(data.features);
+  renderStats(data.features.filter(f=>f.properties.data_sufficient));
   document.getElementById('count-pill').textContent = data.features.length + ' block groups';
 });
 </script>
