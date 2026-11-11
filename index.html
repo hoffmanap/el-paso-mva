@@ -1,0 +1,379 @@
+<meta name="claude:viewport-fit-sides" content="cover">
+<title>El Paso Market Value Analysis</title>
+<style>
+/* Layout concept: full-bleed map as the primary instrument, with a fixed
+   navy masthead (echoing Reinvestment Fund's own site chrome) and a
+   slide-up detail panel for the selected block group -- the map IS the
+   report, the panel is the footnote. */
+:root{
+  --navy-900:#122236;
+  --navy-800:#1b3350;
+  --navy-700:#2c4a6e;
+  --navy-600:#3f6690;
+  --paper:#f6f3ec;
+  --paper-dim:#eae5d8;
+  --ink:#1b2430;
+  --ink-dim:#5b6472;
+  --gold:#c9962c;
+  --line:#d8d2c0;
+  --card-bg:#ffffff;
+  --mA:#163a5c; --mB:#2f6b8a; --mC:#5fa3a0; --mD:#e8c158; --mE:#d98a3d; --mF:#b5452f;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --navy-900:#0b1420; --navy-800:#13263d; --navy-700:#1f3c5c; --navy-600:#2f567e;
+    --paper:#15191f; --paper-dim:#1c2129; --ink:#e9e6dd; --ink-dim:#a3aab5;
+    --gold:#e0ad4c; --line:#333a44; --card-bg:#1c2129;
+    --mA:#3d79ab; --mB:#4a97ab; --mC:#6ebcb0; --mD:#e8c158; --mE:#e0973f; --mF:#c6563a;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"]{
+  --navy-900:#0b1420; --navy-800:#13263d; --navy-700:#1f3c5c; --navy-600:#2f567e;
+  --paper:#15191f; --paper-dim:#1c2129; --ink:#e9e6dd; --ink-dim:#a3aab5;
+  --gold:#e0ad4c; --line:#333a44; --card-bg:#1c2129;
+  --mA:#3d79ab; --mB:#4a97ab; --mC:#6ebcb0; --mD:#e8c158; --mE:#e0973f; --mF:#c6563a;
+  color-scheme: dark;
+}
+*{box-sizing:border-box}
+body{
+  margin:0; background:var(--paper); color:var(--ink);
+  font-family:'Inter',system-ui,-apple-system,sans-serif;
+  padding-left:max(0px, env(safe-area-inset-left,0px));
+  padding-right:max(0px, env(safe-area-inset-right,0px));
+  height:100%; overflow:hidden;
+}
+html{height:100%}
+h1,h2,h3,.disp{font-family:'Space Grotesk',system-ui,sans-serif; text-wrap:balance}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:40;background:var(--navy-900)}
+
+#app{display:flex; flex-direction:column; height:100%}
+
+header{
+  background:var(--navy-900); color:#f3efe4; flex:0 0 auto;
+  padding: calc(14px + env(safe-area-inset-top,0px)) max(16px, env(safe-area-inset-left,0px)) 14px max(16px, env(safe-area-inset-right,0px));
+  display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap;
+  border-bottom:3px solid var(--gold); position:relative; z-index:30;
+}
+.brand{display:flex; flex-direction:column; gap:2px; min-width:0}
+.eyebrow{font-size:10.5px; letter-spacing:.14em; text-transform:uppercase; color:#b9c6d6; font-weight:600}
+.brand h1{margin:0; font-size:18px; font-weight:600; color:#fff; line-height:1.15}
+.brand .sub{font-size:11.5px; color:#9fb0c2}
+.hdr-right{display:flex; align-items:center; gap:10px; font-size:11px; color:#b9c6d6}
+.pill{background:var(--navy-700); border:1px solid var(--navy-600); border-radius:999px; padding:4px 10px; font-size:11px; color:#eaf0f6}
+
+#main{flex:1 1 auto; position:relative; min-height:0}
+#map{position:absolute; inset:0}
+
+.leaflet-container{background:var(--paper-dim) !important; font-family:inherit}
+
+#legend{
+  position:absolute; left:max(14px, env(safe-area-inset-left,0px)); bottom:14px; z-index:20;
+  background:var(--card-bg); border:1px solid var(--line); border-radius:10px;
+  padding:12px 14px; box-shadow:0 6px 18px rgba(0,0,0,.18); max-width:230px;
+}
+#legend h3{margin:0 0 8px; font-size:11px; letter-spacing:.08em; text-transform:uppercase; color:var(--ink-dim)}
+.leg-row{display:flex; align-items:center; gap:8px; font-size:12.5px; padding:2.5px 0; cursor:pointer; border-radius:5px}
+.leg-row:hover{background:var(--paper-dim)}
+.leg-row.dim{opacity:.35}
+.leg-sw{width:14px; height:14px; border-radius:3px; flex:0 0 auto}
+.leg-label{color:var(--ink); font-weight:600; font-size:12.5px}
+.leg-n{margin-left:auto; color:var(--ink-dim); font-variant-numeric:tabular-nums; font-size:11.5px}
+
+#statbar{
+  position:absolute; top:12px; right:max(12px, env(safe-area-inset-right,0px)); z-index:20;
+  display:flex; gap:8px; flex-wrap:wrap; max-width:min(560px, calc(100vw - 28px)); justify-content:flex-end;
+}
+.stat{
+  background:var(--card-bg); border:1px solid var(--line); border-radius:10px;
+  padding:8px 12px; min-width:84px; box-shadow:0 4px 12px rgba(0,0,0,.14);
+}
+.stat .v{font-family:'Space Grotesk'; font-size:17px; font-weight:600; font-variant-numeric:tabular-nums; line-height:1.1}
+.stat .l{font-size:10px; color:var(--ink-dim); text-transform:uppercase; letter-spacing:.06em; margin-top:2px}
+
+#panel{
+  position:absolute; left:0; right:0; bottom:0; z-index:25;
+  background:var(--card-bg); border-top:1px solid var(--line);
+  border-radius:16px 16px 0 0; box-shadow:0 -8px 24px rgba(0,0,0,.2);
+  transform:translateY(100%); transition:transform .28s ease;
+  max-height:62%; display:flex; flex-direction:column;
+  padding-bottom: env(safe-area-inset-bottom,0px);
+}
+#panel.open{transform:translateY(0)}
+#panel-head{display:flex; align-items:flex-start; justify-content:space-between; gap:10px; padding:14px 16px 8px; flex:0 0 auto}
+#panel-type{display:inline-flex; align-items:center; gap:7px; font-size:11px; font-weight:700; letter-spacing:.04em; padding:4px 9px; border-radius:999px; color:#fff}
+#panel-name{font-size:15px; font-weight:600; margin:6px 0 0; font-family:'Space Grotesk'}
+#panel-sub{font-size:11.5px; color:var(--ink-dim); margin-top:1px}
+#panel-close{background:none; border:none; font-size:20px; color:var(--ink-dim); cursor:pointer; line-height:1; padding:4px}
+#panel-body{overflow-y:auto; padding:4px 16px 16px; flex:1 1 auto}
+.metric-grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(118px,1fr)); gap:10px; margin-top:4px}
+.metric{background:var(--paper-dim); border-radius:8px; padding:9px 10px}
+.metric .mv{font-family:'Space Grotesk'; font-size:16px; font-weight:600; font-variant-numeric:tabular-nums}
+.metric .ml{font-size:10.5px; color:var(--ink-dim); margin-top:2px}
+.barwrap{margin-top:14px}
+.barwrap h4{font-size:10.5px; text-transform:uppercase; letter-spacing:.07em; color:var(--ink-dim); margin:0 0 6px}
+.bar-row{display:flex; align-items:center; gap:8px; font-size:11.5px; margin:3px 0}
+.bar-row .lab{width:92px; flex:0 0 auto; color:var(--ink-dim)}
+.bar-track{flex:1; height:7px; background:var(--paper-dim); border-radius:4px; overflow:hidden}
+.bar-fill{height:100%; border-radius:4px}
+.bar-val{width:48px; text-align:right; flex:0 0 auto; font-variant-numeric:tabular-nums}
+
+#empty-hint{
+  position:absolute; left:50%; bottom:18px; transform:translateX(-50%); z-index:15;
+  background:var(--navy-900); color:#f3efe4; font-size:12px; padding:7px 14px; border-radius:999px;
+  box-shadow:0 4px 14px rgba(0,0,0,.25); pointer-events:none; opacity:.92;
+}
+
+#about-btn{
+  position:absolute; left:max(14px, env(safe-area-inset-left,0px)); top:12px; z-index:20;
+  background:var(--card-bg); border:1px solid var(--line); color:var(--ink);
+  font-size:11.5px; font-weight:600; padding:7px 12px; border-radius:999px; cursor:pointer;
+  box-shadow:0 4px 12px rgba(0,0,0,.14);
+}
+#about{
+  position:absolute; inset:0; z-index:50; background:rgba(10,14,20,.5);
+  display:none; align-items:center; justify-content:center; padding:20px;
+}
+#about.open{display:flex}
+#about .card{
+  background:var(--card-bg); max-width:480px; width:100%; border-radius:14px; padding:22px 22px 18px;
+  max-height:80%; overflow-y:auto; box-shadow:0 20px 50px rgba(0,0,0,.35);
+}
+#about h2{margin:0 0 4px; font-size:19px}
+#about p{font-size:13px; line-height:1.55; color:var(--ink-dim); margin:10px 0}
+#about .src{font-size:11px; color:var(--ink-dim); border-top:1px solid var(--line); margin-top:14px; padding-top:12px; line-height:1.6}
+#about code{background:var(--paper-dim); padding:1px 5px; border-radius:4px; font-size:11px}
+#about button.close{float:right; background:none; border:none; font-size:20px; color:var(--ink-dim); cursor:pointer}
+
+@media (max-width:620px){
+  .brand h1{font-size:15.5px}
+  .brand .sub{display:none}
+  #statbar{display:none}
+  #legend{max-width:180px; padding:10px 11px}
+}
+</style>
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap">
+<style>.leaflet-image-layer,.leaflet-layer,.leaflet-marker-icon,.leaflet-marker-shadow,.leaflet-pane,.leaflet-pane>canvas,.leaflet-pane>svg,.leaflet-tile,.leaflet-tile-container,.leaflet-zoom-box{position:absolute;left:0;top:0}.leaflet-container{overflow:hidden}.leaflet-marker-icon,.leaflet-marker-shadow,.leaflet-tile{-webkit-user-select:none;-moz-user-select:none;user-select:none;-webkit-user-drag:none}.leaflet-tile::selection{background:0 0}.leaflet-safari .leaflet-tile{image-rendering:-webkit-optimize-contrast}.leaflet-safari .leaflet-tile-container{width:1600px;height:1600px;-webkit-transform-origin:0 0}.leaflet-marker-icon,.leaflet-marker-shadow{display:block}.leaflet-container .leaflet-overlay-pane svg{max-width:none!important;max-height:none!important}.leaflet-container .leaflet-marker-pane img,.leaflet-container .leaflet-shadow-pane img,.leaflet-container .leaflet-tile,.leaflet-container .leaflet-tile-pane img,.leaflet-container img.leaflet-image-layer{max-width:none!important;max-height:none!important;width:auto;padding:0}.leaflet-container img.leaflet-tile{mix-blend-mode:plus-lighter}.leaflet-container.leaflet-touch-zoom{-ms-touch-action:pan-x pan-y;touch-action:pan-x pan-y}.leaflet-container.leaflet-touch-drag{-ms-touch-action:pinch-zoom;touch-action:none;touch-action:pinch-zoom}.leaflet-container.leaflet-touch-drag.leaflet-touch-zoom{-ms-touch-action:none;touch-action:none}.leaflet-container{-webkit-tap-highlight-color:transparent}.leaflet-container a{-webkit-tap-highlight-color:rgba(51,181,229,.4)}.leaflet-tile{filter:inherit;visibility:hidden}.leaflet-tile-loaded{visibility:inherit}.leaflet-zoom-box{width:0;height:0;-moz-box-sizing:border-box;box-sizing:border-box;z-index:800}.leaflet-overlay-pane svg{-moz-user-select:none}.leaflet-pane{z-index:400}.leaflet-tile-pane{z-index:200}.leaflet-overlay-pane{z-index:400}.leaflet-shadow-pane{z-index:500}.leaflet-marker-pane{z-index:600}.leaflet-tooltip-pane{z-index:650}.leaflet-popup-pane{z-index:700}.leaflet-map-pane canvas{z-index:100}.leaflet-map-pane svg{z-index:200}.leaflet-vml-shape{width:1px;height:1px}.lvml{behavior:url(#default#VML);display:inline-block;position:absolute}.leaflet-control{position:relative;z-index:800;pointer-events:visiblePainted;pointer-events:auto}.leaflet-bottom,.leaflet-top{position:absolute;z-index:1000;pointer-events:none}.leaflet-top{top:0}.leaflet-right{right:0}.leaflet-bottom{bottom:0}.leaflet-left{left:0}.leaflet-control{float:left;clear:both}.leaflet-right .leaflet-control{float:right}.leaflet-top .leaflet-control{margin-top:10px}.leaflet-bottom .leaflet-control{margin-bottom:10px}.leaflet-left .leaflet-control{margin-left:10px}.leaflet-right .leaflet-control{margin-right:10px}.leaflet-fade-anim .leaflet-popup{opacity:0;-webkit-transition:opacity .2s linear;-moz-transition:opacity .2s linear;transition:opacity .2s linear}.leaflet-fade-anim .leaflet-map-pane .leaflet-popup{opacity:1}.leaflet-zoom-animated{-webkit-transform-origin:0 0;-ms-transform-origin:0 0;transform-origin:0 0}svg.leaflet-zoom-animated{will-change:transform}.leaflet-zoom-anim .leaflet-zoom-animated{-webkit-transition:-webkit-transform .25s cubic-bezier(0,0,.25,1);-moz-transition:-moz-transform .25s cubic-bezier(0,0,.25,1);transition:transform .25s cubic-bezier(0,0,.25,1)}.leaflet-pan-anim .leaflet-tile,.leaflet-zoom-anim .leaflet-tile{-webkit-transition:none;-moz-transition:none;transition:none}.leaflet-zoom-anim .leaflet-zoom-hide{visibility:hidden}.leaflet-interactive{cursor:pointer}.leaflet-grab{cursor:-webkit-grab;cursor:-moz-grab;cursor:grab}.leaflet-crosshair,.leaflet-crosshair .leaflet-interactive{cursor:crosshair}.leaflet-control,.leaflet-popup-pane{cursor:auto}.leaflet-dragging .leaflet-grab,.leaflet-dragging .leaflet-grab .leaflet-interactive,.leaflet-dragging .leaflet-marker-draggable{cursor:move;cursor:-webkit-grabbing;cursor:-moz-grabbing;cursor:grabbing}.leaflet-image-layer,.leaflet-marker-icon,.leaflet-marker-shadow,.leaflet-pane>svg path,.leaflet-tile-container{pointer-events:none}.leaflet-image-layer.leaflet-interactive,.leaflet-marker-icon.leaflet-interactive,.leaflet-pane>svg path.leaflet-interactive,svg.leaflet-image-layer.leaflet-interactive path{pointer-events:visiblePainted;pointer-events:auto}.leaflet-container{background:#ddd;outline-offset:1px}.leaflet-container a{color:#0078a8}.leaflet-zoom-box{border:2px dotted #38f;background:rgba(255,255,255,.5)}.leaflet-container{font-family:"Helvetica Neue",Arial,Helvetica,sans-serif;font-size:12px;font-size:.75rem;line-height:1.5}.leaflet-bar{box-shadow:0 1px 5px rgba(0,0,0,.65);border-radius:4px}.leaflet-bar a{background-color:#fff;border-bottom:1px solid #ccc;width:26px;height:26px;line-height:26px;display:block;text-align:center;text-decoration:none;color:#000}.leaflet-bar a,.leaflet-control-layers-toggle{background-position:50% 50%;background-repeat:no-repeat;display:block}.leaflet-bar a:focus,.leaflet-bar a:hover{background-color:#f4f4f4}.leaflet-bar a:first-child{border-top-left-radius:4px;border-top-right-radius:4px}.leaflet-bar a:last-child{border-bottom-left-radius:4px;border-bottom-right-radius:4px;border-bottom:none}.leaflet-bar a.leaflet-disabled{cursor:default;background-color:#f4f4f4;color:#bbb}.leaflet-touch .leaflet-bar a{width:30px;height:30px;line-height:30px}.leaflet-touch .leaflet-bar a:first-child{border-top-left-radius:2px;border-top-right-radius:2px}.leaflet-touch .leaflet-bar a:last-child{border-bottom-left-radius:2px;border-bottom-right-radius:2px}.leaflet-control-zoom-in,.leaflet-control-zoom-out{font:bold 18px 'Lucida Console',Monaco,monospace;text-indent:1px}.leaflet-touch .leaflet-control-zoom-in,.leaflet-touch .leaflet-control-zoom-out{font-size:22px}.leaflet-control-layers{box-shadow:0 1px 5px rgba(0,0,0,.4);background:#fff;border-radius:5px}.leaflet-control-layers-toggle{background-image:url(images/layers.png);width:36px;height:36px}.leaflet-retina .leaflet-control-layers-toggle{background-image:url(images/layers-2x.png);background-size:26px 26px}.leaflet-touch .leaflet-control-layers-toggle{width:44px;height:44px}.leaflet-control-layers .leaflet-control-layers-list,.leaflet-control-layers-expanded .leaflet-control-layers-toggle{display:none}.leaflet-control-layers-expanded .leaflet-control-layers-list{display:block;position:relative}.leaflet-control-layers-expanded{padding:6px 10px 6px 6px;color:#333;background:#fff}.leaflet-control-layers-scrollbar{overflow-y:scroll;overflow-x:hidden;padding-right:5px}.leaflet-control-layers-selector{margin-top:2px;position:relative;top:1px}.leaflet-control-layers label{display:block;font-size:13px;font-size:1.08333em}.leaflet-control-layers-separator{height:0;border-top:1px solid #ddd;margin:5px -10px 5px -6px}.leaflet-default-icon-path{background-image:url(images/marker-icon.png)}.leaflet-container .leaflet-control-attribution{background:#fff;background:rgba(255,255,255,.8);margin:0}.leaflet-control-attribution,.leaflet-control-scale-line{padding:0 5px;color:#333;line-height:1.4}.leaflet-control-attribution a{text-decoration:none}.leaflet-control-attribution a:focus,.leaflet-control-attribution a:hover{text-decoration:underline}.leaflet-attribution-flag{display:inline!important;vertical-align:baseline!important;width:1em;height:.6669em}.leaflet-left .leaflet-control-scale{margin-left:5px}.leaflet-bottom .leaflet-control-scale{margin-bottom:5px}.leaflet-control-scale-line{border:2px solid #777;border-top:none;line-height:1.1;padding:2px 5px 1px;white-space:nowrap;-moz-box-sizing:border-box;box-sizing:border-box;background:rgba(255,255,255,.8);text-shadow:1px 1px #fff}.leaflet-control-scale-line:not(:first-child){border-top:2px solid #777;border-bottom:none;margin-top:-2px}.leaflet-control-scale-line:not(:first-child):not(:last-child){border-bottom:2px solid #777}.leaflet-touch .leaflet-bar,.leaflet-touch .leaflet-control-attribution,.leaflet-touch .leaflet-control-layers{box-shadow:none}.leaflet-touch .leaflet-bar,.leaflet-touch .leaflet-control-layers{border:2px solid rgba(0,0,0,.2);background-clip:padding-box}.leaflet-popup{position:absolute;text-align:center;margin-bottom:20px}.leaflet-popup-content-wrapper{padding:1px;text-align:left;border-radius:12px}.leaflet-popup-content{margin:13px 24px 13px 20px;line-height:1.3;font-size:13px;font-size:1.08333em;min-height:1px}.leaflet-popup-content p{margin:17px 0;margin:1.3em 0}.leaflet-popup-tip-container{width:40px;height:20px;position:absolute;left:50%;margin-top:-1px;margin-left:-20px;overflow:hidden;pointer-events:none}.leaflet-popup-tip{width:17px;height:17px;padding:1px;margin:-10px auto 0;pointer-events:auto;-webkit-transform:rotate(45deg);-moz-transform:rotate(45deg);-ms-transform:rotate(45deg);transform:rotate(45deg)}.leaflet-popup-content-wrapper,.leaflet-popup-tip{background:#fff;color:#333;box-shadow:0 3px 14px rgba(0,0,0,.4)}.leaflet-container a.leaflet-popup-close-button{position:absolute;top:0;right:0;border:none;text-align:center;width:24px;height:24px;font:16px/24px Tahoma,Verdana,sans-serif;color:#757575;text-decoration:none;background:0 0}.leaflet-container a.leaflet-popup-close-button:focus,.leaflet-container a.leaflet-popup-close-button:hover{color:#585858}.leaflet-popup-scrolled{overflow:auto}.leaflet-oldie .leaflet-popup-content-wrapper{-ms-zoom:1}.leaflet-oldie .leaflet-popup-tip{width:24px;margin:0 auto}.leaflet-oldie .leaflet-control-layers,.leaflet-oldie .leaflet-control-zoom,.leaflet-oldie .leaflet-popup-content-wrapper,.leaflet-oldie .leaflet-popup-tip{border:1px solid #999}.leaflet-div-icon{background:#fff;border:1px solid #666}.leaflet-tooltip{position:absolute;padding:6px;background-color:#fff;border:1px solid #fff;border-radius:3px;color:#222;white-space:nowrap;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;pointer-events:none;box-shadow:0 1px 3px rgba(0,0,0,.4)}.leaflet-tooltip.leaflet-interactive{cursor:pointer;pointer-events:auto}.leaflet-tooltip-bottom:before,.leaflet-tooltip-left:before,.leaflet-tooltip-right:before,.leaflet-tooltip-top:before{position:absolute;pointer-events:none;border:6px solid transparent;background:0 0;content:""}.leaflet-tooltip-bottom{margin-top:6px}.leaflet-tooltip-top{margin-top:-6px}.leaflet-tooltip-bottom:before,.leaflet-tooltip-top:before{left:50%;margin-left:-6px}.leaflet-tooltip-top:before{bottom:0;margin-bottom:-12px;border-top-color:#fff}.leaflet-tooltip-bottom:before{top:0;margin-top:-12px;margin-left:-6px;border-bottom-color:#fff}.leaflet-tooltip-left{margin-left:-6px}.leaflet-tooltip-right{margin-left:6px}.leaflet-tooltip-left:before,.leaflet-tooltip-right:before{top:50%;margin-top:-6px}.leaflet-tooltip-left:before{right:0;margin-right:-12px;border-left-color:#fff}.leaflet-tooltip-right:before{left:0;margin-left:-12px;border-right-color:#fff}@media print{.leaflet-control{-webkit-print-color-adjust:exact;print-color-adjust:exact}}</style>
+
+<div id="app">
+  <header>
+    <div class="brand">
+      <span class="eyebrow">Housing Market Diagnostics &middot; El Paso County, TX</span>
+      <h1>Market Value Analysis</h1>
+      <span class="sub">An internally-referenced block-group typology, in the tradition of Reinvestment Fund's MVA</span>
+    </div>
+    <div class="hdr-right">
+      <span class="pill" id="count-pill">557 block groups</span>
+      <span class="pill">K-means, 6 types</span>
+    </div>
+  </header>
+
+  <div id="main">
+    <div id="map"></div>
+    <button id="about-btn">&#9432; Methodology &amp; sources</button>
+    <div id="statbar"></div>
+    <div id="legend">
+      <h3>Market Type</h3>
+      <div id="legend-rows"></div>
+    </div>
+    <div id="empty-hint">Tap a block group to see its indicators</div>
+    <div id="panel">
+      <div id="panel-head">
+        <div>
+          <span id="panel-type"></span>
+          <div id="panel-name"></div>
+          <div id="panel-sub"></div>
+        </div>
+        <button id="panel-close" aria-label="Close">&times;</button>
+      </div>
+      <div id="panel-body"></div>
+    </div>
+  </div>
+
+  <div id="about">
+    <div class="card">
+      <button class="close" id="about-close">&times;</button>
+      <h2>What this is</h2>
+      <p>A prototype <strong>Market Value Analysis</strong> for El Paso County, built in the spirit of
+      <a href="https://www.reinvestment.com/research/market-value-analysis/" target="_blank" rel="noopener">Reinvestment Fund's MVA</a> &mdash;
+      a data-based, field-validatable tool that clusters small geographies into market types to guide
+      investment and revitalization strategy. Like the original, it works at a sub-neighborhood geography
+      (Census block groups) and produces an <em>internally-referenced</em> index: types are only meaningful
+      relative to each other within El Paso, not compared to other cities' MVAs.</p>
+      <p>Six indicators were standardized (z-scored) and clustered with k-means into six market types,
+      <strong>A</strong> (highest value / least distress) through <strong>F</strong> (most distressed):
+      median sale price per sq ft, median days-on-market, new residential permits per 1,000 units,
+      owner-occupancy rate, vacancy rate, and code-enforcement violations per 1,000 units.</p>
+      <div class="src">
+        <strong>Sources</strong><br>
+        Home sales &mdash; <code>hoffmanap/housetrends</code> (27,448 geocoded closed sales since 2023, true block-group median $/sqft); days-on-market supplemented from <code>hoffmanap/MLSSales</code> tract-level stats<br>
+        Parcels &amp; permits &mdash; <code>hoffmanap/permits</code>, City of El Paso Planning &amp; Inspections (42,603 permits, live ArcGIS feed)<br>
+        Code enforcement &mdash; City of El Paso case list (Nov 2024), filtered to physical-blight categories, geocoded via Census Bureau batch geocoder<br>
+        Foreclosures &mdash; El Paso County Clerk's live Foreclosure Map feed, snapshotted monthly (see below)<br>
+        Demographics &amp; housing stock &mdash; ACS 2020&ndash;2024 5-year estimates (via Census Reporter), block-group level<br>
+        Geography &mdash; US Census TIGERweb, El Paso County block groups
+        <br><br>
+        <strong>Foreclosures:</strong> the county's searchable foreclosure form is CAPTCHA-gated and only returns legal
+        descriptions, not addresses or coordinates. A companion map feed on the same county site is open and geocoded,
+        but only ever shows the next posted sale date (Texas law requires posting 21+ days ahead) &mdash; so rather than
+        one static pull, a scheduled job snapshots it monthly and accumulates a real history over time. Not yet
+        enough months of data to use as a clustering input; this will fold in once a meaningful history builds up.
+        <br><br>
+        <strong>Known gaps vs. a full MVA:</strong> no subsidized-housing layer; foreclosure history still accumulating
+        (see above).
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+<script>
+const TYPE_COLOR = {A:'var(--mA)',B:'var(--mB)',C:'var(--mC)',D:'var(--mD)',E:'var(--mE)',F:'var(--mF)'};
+const TYPE_HEX = {}; // resolved at runtime from CSS vars
+const TYPE_LABEL = {
+  A:'Highest Value / Strongest',
+  B:'Strong Market',
+  C:'Moderate-Strong',
+  D:'Moderate',
+  E:'Transitional / Softening',
+  F:'Distressed / Weakest'
+};
+const ORDER = ['A','B','C','D','E','F'];
+
+function resolveVar(name){
+  const probe = document.createElement('div');
+  probe.style.color = `var(${name})`;
+  document.body.appendChild(probe);
+  const c = getComputedStyle(probe).color;
+  document.body.removeChild(probe);
+  return c;
+}
+['--mA','--mB','--mC','--mD','--mE','--mF'].forEach((v,i)=>{ TYPE_HEX[ORDER[i]] = resolveVar(v); });
+
+const map = L.map('map', {zoomControl:false, attributionControl:false}).setView([31.76, -106.42], 10.4);
+L.control.zoom({position:'topright'}).addTo(map);
+L.control.attribution({prefix:false, position:'bottomright'}).addAttribution('TIGER/ACS/MLS/permit data via public &amp; project sources').addTo(map);
+
+let geo = null;
+let layer = null;
+const activeTypes = new Set(ORDER);
+
+function fmt(n, d=0){ if(n===null||n===undefined||Number.isNaN(n)) return '—'; return Number(n).toLocaleString(undefined,{maximumFractionDigits:d, minimumFractionDigits:d}); }
+function fmtMoney(n){ if(n===null||n===undefined) return '—'; return '$'+Number(n).toLocaleString(undefined,{maximumFractionDigits:0}); }
+
+function styleFor(feature){
+  const t = feature.properties.market_type;
+  const on = activeTypes.has(t);
+  return {
+    fillColor: TYPE_HEX[t] || '#999',
+    weight: 0.6,
+    color: 'rgba(0,0,0,.25)',
+    fillOpacity: on ? 0.82 : 0.06,
+    opacity: on ? 1 : 0.15
+  };
+}
+
+function renderLegend(counts, total){
+  const el = document.getElementById('legend-rows');
+  el.innerHTML = '';
+  ORDER.forEach(t=>{
+    const row = document.createElement('div');
+    row.className = 'leg-row' + (activeTypes.has(t) ? '' : ' dim');
+    row.innerHTML = `<span class="leg-sw" style="background:${TYPE_HEX[t]}"></span>
+      <span class="leg-label">${t} &middot; ${TYPE_LABEL[t]}</span>
+      <span class="leg-n">${counts[t]||0}</span>`;
+    row.onclick = ()=>{
+      if(activeTypes.has(t) && activeTypes.size===1){ ORDER.forEach(x=>activeTypes.add(x)); }
+      else if(activeTypes.has(t)){ activeTypes.delete(t); }
+      else { activeTypes.add(t); }
+      layer.setStyle(styleFor);
+      renderLegend(counts, total);
+    };
+    el.appendChild(row);
+  });
+}
+
+function renderStats(features){
+  const vals = (f)=>features.map(x=>x.properties[f]).filter(v=>v!==null && v!==undefined);
+  const med = (arr)=>{ if(!arr.length) return null; const s=[...arr].sort((a,b)=>a-b); const m=Math.floor(s.length/2); return s.length%2? s[m] : (s[m-1]+s[m])/2; };
+  const ppsf = med(vals('median_ppsf'));
+  const dom = med(vals('median_dom'));
+  const vac = med(vals('vacancy_rate'));
+  const own = med(vals('owner_occ_rate'));
+  const stats = [
+    {v: fmtMoney(ppsf), l:'Median $/sqft'},
+    {v: dom? fmt(dom)+'d':'—', l:'Median DOM'},
+    {v: vac? fmt(vac,1)+'%':'—', l:'Vacancy (med.)'},
+    {v: own? fmt(own,0)+'%':'—', l:'Owner-occ (med.)'},
+  ];
+  document.getElementById('statbar').innerHTML = stats.map(s=>`<div class="stat"><div class="v">${s.v}</div><div class="l">${s.l}</div></div>`).join('');
+}
+
+function bar(label, pct, color, valText){
+  pct = Math.max(0, Math.min(100, pct||0));
+  return `<div class="bar-row"><div class="lab">${label}</div><div class="bar-track"><div class="bar-fill" style="width:${pct}%;background:${color}"></div></div><div class="bar-val">${valText}</div></div>`;
+}
+
+function openPanel(p){
+  const panel = document.getElementById('panel');
+  document.getElementById('empty-hint').style.display = 'none';
+  document.getElementById('panel-type').textContent = p.market_type + ' · ' + TYPE_LABEL[p.market_type];
+  document.getElementById('panel-type').style.background = TYPE_HEX[p.market_type];
+  document.getElementById('panel-name').textContent = p.NAME + ', Tract ' + (p.tract ? p.tract.slice(-6).replace(/^0+/,'') : '');
+  document.getElementById('panel-sub').textContent = `${fmt(p.total_units_acs)} housing units · ${fmt(p.n_sales)} MLS sales in parent tract (2021–24)`;
+
+  const maxPpsf = 220, maxDom = 150, maxVac = 25, maxOwn = 100, maxPermit = 40, maxViol = 60;
+  document.getElementById('panel-body').innerHTML = `
+    <div class="metric-grid">
+      <div class="metric"><div class="mv">${fmtMoney(p.median_ppsf)}</div><div class="ml">Median $ / sqft</div></div>
+      <div class="metric"><div class="mv">${p.median_dom? fmt(p.median_dom)+'d':'—'}</div><div class="ml">Days on market</div></div>
+      <div class="metric"><div class="mv">${p.median_hh_income? fmtMoney(p.median_hh_income):'—'}</div><div class="ml">Median HH income</div></div>
+      <div class="metric"><div class="mv">${p.pre1960_share!=null? fmt(p.pre1960_share,0)+'%':'—'}</div><div class="ml">Built pre-1960</div></div>
+    </div>
+    <div class="barwrap">
+      <h4>Strength / distress indicators</h4>
+      ${bar('$/sqft', (p.median_ppsf||0)/maxPpsf*100, 'var(--mA)', fmtMoney(p.median_ppsf))}
+      ${bar('Days on mkt', (p.median_dom||0)/maxDom*100, 'var(--mE)', p.median_dom? fmt(p.median_dom):'—')}
+      ${bar('Owner-occ', (p.owner_occ_rate||0)/maxOwn*100, 'var(--mB)', p.owner_occ_rate!=null? fmt(p.owner_occ_rate,0)+'%':'—')}
+      ${bar('Vacancy', (p.vacancy_rate||0)/maxVac*100, 'var(--mF)', p.vacancy_rate!=null? fmt(p.vacancy_rate,1)+'%':'—')}
+      ${bar('Permits /1k', (p.permits_per_1000_units||0)/maxPermit*100, 'var(--mA)', fmt(p.permits_per_1000_units,1))}
+      ${bar('Violations /1k', (p.violations_per_1000_units||0)/maxViol*100, 'var(--mF)', fmt(p.violations_per_1000_units,1))}
+    </div>
+    <div style="margin-top:14px; font-size:11px; color:var(--ink-dim)">
+      GEOID ${p.GEOID} &middot; composite score ${fmt(p.composite_score,2)} &middot; ${fmt(p.permit_count)} permits, ${fmt(p.violation_count)} violations recorded
+    </div>
+  `;
+  panel.classList.add('open');
+}
+
+document.getElementById('panel-close').onclick = ()=>{
+  document.getElementById('panel').classList.remove('open');
+};
+document.getElementById('about-btn').onclick = ()=> document.getElementById('about').classList.add('open');
+document.getElementById('about-close').onclick = ()=> document.getElementById('about').classList.remove('open');
+document.getElementById('about').addEventListener('click', (e)=>{ if(e.target.id==='about') e.currentTarget.classList.remove('open'); });
+
+fetch('mva_map.geojson').then(r=>r.json()).then(data=>{
+  geo = data;
+  const counts = {};
+  ORDER.forEach(t=>counts[t]=0);
+  data.features.forEach(f=> counts[f.properties.market_type] = (counts[f.properties.market_type]||0)+1 );
+
+  layer = L.geoJSON(data, {
+    style: styleFor,
+    onEachFeature: (feature, lyr)=>{
+      lyr.on('click', ()=> openPanel(feature.properties));
+      lyr.on('mouseover', ()=> lyr.setStyle({weight:2, color:'#000'}));
+      lyr.on('mouseout', ()=> lyr.setStyle(styleFor(feature)));
+    }
+  }).addTo(map);
+
+  try{ map.fitBounds(layer.getBounds(), {padding:[20,20]}); }catch(e){}
+
+  renderLegend(counts, data.features.length);
+  renderStats(data.features);
+  document.getElementById('count-pill').textContent = data.features.length + ' block groups';
+});
+</script>

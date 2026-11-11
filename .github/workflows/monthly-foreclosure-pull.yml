@@ -1,0 +1,36 @@
+name: Monthly foreclosure snapshot
+
+# El Paso County's Foreclosure Map feed only ever shows the next posted
+# sale date(s) -- it is not a historical archive. Running this monthly
+# and committing the result builds real history over time. Monthly is
+# plenty: Texas law requires postings 21+ days before the first-Tuesday
+# sale, so nothing meaningful changes week to week.
+
+on:
+  schedule:
+    - cron: "0 13 1 * *"   # 1st of each month, 13:00 UTC (~6am Mountain)
+  workflow_dispatch: {}      # allow manual runs from the Actions tab
+
+permissions:
+  contents: write
+
+jobs:
+  snapshot:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Fetch current foreclosure postings
+        run: python3 foreclosures/fetch_foreclosures.py --out foreclosures/foreclosures_history.csv
+
+      - name: Commit if changed
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          if git diff --quiet -- foreclosures/foreclosures_history.csv; then
+            echo "No new foreclosure postings since last run."
+          else
+            git add foreclosures/foreclosures_history.csv
+            git commit -m "Monthly foreclosure snapshot ($(date -u +%Y-%m-%d))"
+            git push
+          fi
