@@ -36,10 +36,12 @@ another city's MVA.
 | Foreclosures | El Paso County Clerk's Foreclosure Map feed | Snapshotted monthly (see below) — accumulating, not yet used as a clustering input |
 | Demographics / housing stock | ACS 2020–2024 5-year estimates, via Census Reporter | Block-group level: vacancy, owner-occupancy, income, housing age |
 | Geography | US Census TIGERweb | 598 block groups, El Paso County (FIPS 48141) |
+| Subsidized housing | HUD LIHTC Properties, live ArcGIS feed (`egis.hud.gov`) | 88 El Paso County properties, 5,888 low-income units — mapped as an overlay, see below |
 
 ## Known gaps vs. a full MVA
 
-- **No subsidized-housing layer** (HUD LIHTC/Section 8 data not yet pulled in)
+- **Subsidized housing isn't a clustering input yet** — LIHTC is pulled in and mapped (see below), but it's shown as an overlay, not folded into the six indicators
+- **Section 8 is only partly available** — see below for what HUD does and doesn't publish
 - **Foreclosure history is still accumulating** — see below for why, and the plan to fold it in once there's enough history
 
 ## The foreclosure data problem
@@ -70,6 +72,36 @@ Given a year or two of accumulated snapshots, foreclosure density per
 block group becomes a real sixth-or-seventh clustering input alongside the
 indicators above.
 
+## Subsidized housing: LIHTC yes, Section 8 partly
+
+**LIHTC** is a clean win. HUD runs a live, geocoded, nationwide ArcGIS feed
+of every Low-Income Housing Tax Credit property
+(`egis.hud.gov/arcgis/rest/services/gotit/LIHTCProperties/MapServer/0`), no
+key required — the same pattern as the TIGERweb geometry and the ACS pull.
+`scripts/build_subsidized_housing.py` queries it for El Paso County (90 raw
+records, 88 unique addresses, 5,888 low-income units), spatial-joins it to
+block groups, and the dashboard shows it as a toggleable gold-dot overlay
+with a per-property tooltip and a per-block-group unit count in the detail
+panel.
+
+**Section 8 is split into two very different stories:**
+
+- *Project-based* assistance (privately-owned buildings with HUD
+  contracts, including 202/811 elderly & disabled housing) is in the same
+  HUD system, as a sister layer called Multifamily Properties
+  (`.../gotit/MultifamilyProperties/MapServer/0`) — 72 El Paso properties,
+  roughly 5,100 assisted units. The catch: HUD doesn't publish coordinates
+  for this layer (every record comes back with null geometry, despite the
+  service advertising point geometry), so it contributes a county-level
+  count only — it's in `data/subsidized_housing.json` as
+  `mf_county_summary`, but it's not on the map.
+- *Tenant-based* assistance (Housing Choice Vouchers, what most people
+  mean by "Section 8") isn't public at any address resolution. Voucher
+  holders are individual low-income households, and HUD doesn't release
+  where they live — for good reason. The closest public substitute is a
+  housing authority's aggregate voucher count (no addresses), which adds
+  nothing spatial here and isn't pulled in.
+
 ## Rebuilding the analysis
 
 ```bash
@@ -82,7 +114,11 @@ python3 scripts/join_sales_points.py
 # 3. Cluster into market types A–F (writes data/mva_result.json)
 python3 scripts/cluster_mva.py
 
-# 4. Rebuild data/mva_map.geojson (block-group geometry + market_type) for the dashboard
+# 4. Pull HUD LIHTC + check Multifamily/Section 8 (writes data/subsidized_housing.json)
+python3 scripts/build_subsidized_housing.py
+
+# 5. Rebuild data/mva_map.geojson (block-group geometry + market_type + subsidized counts)
+python3 scripts/build_full_map.py
 ```
 
 Each script documents its inputs and assumptions inline.

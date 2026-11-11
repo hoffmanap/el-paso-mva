@@ -1,0 +1,1613 @@
+{
+"points": [
+{
+"name": "COOPERSTOWN APTS",
+"address": "5001 Sean Haggerty Dr",
+"city": "El Paso",
+"zip": "79924",
+"lon": -106.42288399971594,
+"lat": 31.929914998933526,
+"total_units": 16,
+"assisted_units": 16,
+"programs": [
+"LIHTC"
+],
+"hud_id": "TXA20030085"
+},
+{
+"name": "CEDAR OAK TOWNHOMES",
+"address": "1480 Cedar Oak Dr",
+"city": "El Paso",
+"zip": "79936",
+"lon": -106.3052880000692,
+"lat": 31.743641999260824,
+"total_units": 160,
+"assisted_units": 128,
+"programs": [
+"LIHTC"
+],
+"hud_id": "TXA20050060"
+},
+{
+"name": "DEER PALMS",
+"address": "6350 Deer Ave",
+"city": "El Paso",
+"zip": "79924",
+"lon": -106.38733799989323,
+"lat": 31.906407999085943,
+"total_units": 152,
+"assisted_units": 152,
+"programs": [
+"LIHTC"
+],
+"hud_id": "TXA20070130"
+},
+{
+"name": "DESERT VILLAS",
+"address": "173 Coronado Rd",
+"city": "El Paso",
+"zip": "79915",
+"lon": -106.3841820000095,
+"lat": 31.743111998983238,
+"total_units": 94,
+"assisted_units": 94,
+"programs": [
+"LIHTC"
+],
+"hud_id": "TXA20100025"
+},
+{
+"name": "DIANA PALMS",
+"address": "4741 Joel Dr",
+"city": "El Paso",
+"zip": "79924",
+"lon": -106.4283019997059,
+"lat": 31.87923299946574,
+"total_units": 36,
+"assisted_units": 36,
+"programs": [
+"LIHTC"
+],
+"hud_id": "TXA20060005"
+},
+{
+"name": "ALAMITO TERRACE APTS",
+"address": "509 S Saint Vrain St",
+"city": "El Paso",
+"zip": "79901",
+"lon": -106.4788570000917,
+"lat": 31.756272999340382,
+"total_units": 76,
+"assisted_units": 0,
+"programs": [
+"LIHTC"
+],
+"hud_id": "TXA00000103"
+},
+{
+"name": "CORONA DEL VALLE",
+"address": "5453 Ridge St",
+"city": "El Paso",
+"zip": "79932",
+"lon": -106.57884100038389,
+"lat": 31.857943998930075,
+"total_units": 100,
+"assisted_units": 100,
+"programs": [
+"LIHTC"
+],
+"hud_id": "TXA20000025"
+},
+{
+"name": "DESERT BREEZE",
+"address": "14700 Cactus View Ct",
+"city": "El Paso",
+"zip": "79928",
+"lon": -106.16739399974085,
+"lat": 31.686018999275607,
+"total_units": 36,
+"assisted_units": 36,
+"programs": [
+"LIHTC"
+],
+"hud_id": "TXA20050100"
+},
+{
+"name": "DYER PALMS",
+"address": "10551 Dyer St",
+"city": "El Paso",
+"zip": "79924",
+"lon": -106.39633199989152,
+"lat": 31.918462999069625,
+"total_units": 152,
+"assisted_units": 120,
+"programs": [
+"LIHTC"
+],
+"hud_id": "TXA00001005"
+},
+{
+"name": "CHAS. E. GRAHAM APARTMENTS",
+"address": "8720 Independence Dr",
+"city": "El Paso",
+"zip": "79907",
+"lon": -106.3409800003801,
+"lat": 31.694580999356,
+"total_units": 63,
+"assisted_units": 63,
+"programs": [
+"LIHTC"
+],
+"hud_id": "TXA0000X010"
+},
+{
+"name": "CHELSEA PLAZA APARTMENTS",
+"address": "600 Chelsea St",
+"city": "El Paso",
+"zip": "79903",
+"lon": -106.42570999988679,
+"lat": 31.778912998804845,
+"total_units": 330,
+"assisted_units": 330,
+"programs": [
+"LIHTC"
+],
+"hud_id": "TXA0000X125"
+},
+{
+"name": "CANUTILLO PALMS",
+"address": "365 La Puesta Dr",
+"city": "El Paso",
+"zip": "79932",
+"lon": -106.58784899972751,
+"lat": 31.894428999127747,
+"total_units": 172,
+"assisted_units": 172,
+"programs": [
+"LIHTC"
+],
+"hud_id": "TXA00000095"
+},
+{
+"name": "CACTUS ROSE, LTD",
+"address": "225 Poplar St",
+"city": "Anthony",
+"zip": "79821",
+"lon": -106.6036180001738,
+"lat": 31.99578699900142,
+"total_units": 26,
+"assisted_units": 26,
+"programs": [
+"LIHTC"
+],
+"hud_id": "TXA20020030"
+},
+{
+"name": "CASTNER PALMS",
+"address": "4651 Cohen Ave",
+"city": "El Paso",
+"zip": "79924",
+"lon": -106.43699799977833,
+"lat": 31.892622999200324,
+"total_units": 100,
+"assisted_units": 100,
+"programs": [
+"LIHTC"
+],
+"hud_id": "TXA20040035"
+},
+{
+"name": "BLUE FLAME",
+"address": "120 N Stanton St",
+"city": "El Paso",
+"zip": "79901",
+"lon": -106.48594899983382,
+"lat": 31.7592219994383,
+"total_units": 150,
+"assisted_units": 120,
+"programs": [
+"LIHTC"
+],
+"hud_id": "TXA0000X114"
+},
+{
+"name": "CANYON SQUARE VILLAGE",
+"address": "8622 N Loop Dr",
+"city": "El Paso",
+"zip": "79907",
+"lon": -106.32512200024533,
+"lat": 31.714167998999248,
+"total_units": 104,
+"assisted_units": 104,
+"programs": [
+"LIHTC"
+],
+"hud_id": "TXA20110820"
+},
+{
+"name": "COMMISSIONERS CORNER II",
+"address": "10700 Montana Ave",
+"city": "El Paso",
+"zip": "79935",
+"lon": -106.32932699971725,
+"lat": 31.798196998908193,
+"total_units": 92,
+"assisted_units": 92,
+"programs": [
+"LIHTC"
+],
+"hud_id": "TXA0000X126"
+},
+{
+"name": "PAINTED DESERT TOWNHOMES",
+"address": "12682 Rio Negro",
+"city": "Clint",
+"zip": "79836",
+"lon": -106.24464400006622,
+"lat": 31.585660999262913,
+"total_units": 20,
+"assisted_units": 20,
+"programs": [
+"LIHTC"
+],
+"hud_id": "TXA20030255"
+},
+{
+"name": "NORTH DESERT PALMS",
+"address": "11001 Dyer St",
+"city": "El Paso",
+"zip": "79934",
+"lon": -106.38542599959139,
+"lat": 31.93240899894671,
+"total_units": 152,
+"assisted_units": 70,
+"programs": [
+"LIHTC"
+],
+"hud_id": "TXA00000153"
+},
+{
+"name": "CIEN PALMAS",
+"address": "7845 Lilac Way",
+"city": "El Paso",
+"zip": "79915",
+"lon": -106.35030300026631,
+"lat": 31.736731999148212,
+"total_units": 150,
+"assisted_units": 150,
+"programs": [
+"LIHTC"
+],
+"hud_id": "TXA20050085"
+},
+{
+"name": "BIENVIVIR PARKSIDE SENIOR COMMUNITY",
+"address": "11530 Vista Del Sol Dr",
+"city": "El Paso",
+"zip": "79936",
+"lon": -106.2987610002166,
+"lat": 31.75161499938424,
+"total_units": 56,
+"assisted_units": 56,
+"programs": [
+"LIHTC"
+],
+"hud_id": "TXA20030020"
+},
+{
+"name": "CAPISTRANO PALMS",
+"address": "8655 Adriana Ct",
+"city": "El Paso",
+"zip": "79907",
+"lon": -106.3468460000837,
+"lat": 31.697147999400052,
+"total_units": 112,
+"assisted_units": 95,
+"programs": [
+"LIHTC"
+],
+"hud_id": "TXA20050055"
+},
+{
+"name": "LINDA VISTA APTS",
+"address": "4866 Hercules Ave",
+"city": "El Paso",
+"zip": "79904",
+"lon": -106.42727099966105,
+"lat": 31.855138999064046,
+"total_units": 36,
+"assisted_units": 36,
+"programs": [
+"LIHTC"
+],
+"hud_id": "TXA20060415"
+},
+{
+"name": "LEE SENIORS LTD",
+"address": "2965 Lee Blvd",
+"city": "El Paso",
+"zip": "79936",
+"lon": -106.29384899966664,
+"lat": 31.781623999275027,
+"total_units": 19,
+"assisted_units": 19,
+"programs": [
+"LIHTC"
+],
+"hud_id": "TXA19990120"
+},
+{
+"name": "LINDEN",
+"address": "504 N Oregon St",
+"city": "El Paso",
+"zip": "79901",
+"lon": -106.48978199976007,
+"lat": 31.760630998881282,
+"total_units": 34,
+"assisted_units": 34,
+"programs": [
+"LIHTC"
+],
+"hud_id": "TXA19940150"
+},
+{
+"name": "MEADOWBROOK TOWNHOMES, LTD",
+"address": "11520 Vista Del Sol Dr",
+"city": "El Paso",
+"zip": "79936",
+"lon": -106.29879600037671,
+"lat": 31.75128099920922,
+"total_units": 24,
+"assisted_units": 0,
+"programs": [
+"LIHTC"
+],
+"hud_id": "TXA00000402"
+},
+{
+"name": "KEYSTONE PLACE",
+"address": "1331 Pullman Dr",
+"city": "El Paso",
+"zip": "79936",
+"lon": -106.29672000004332,
+"lat": 31.72771499898485,
+"total_units": 52,
+"assisted_units": 48,
+"programs": [
+"LIHTC"
+],
+"hud_id": "TXA0000X038"
+},
+{
+"name": "AMERICAS PALMS",
+"address": "12310 Lorenzo Ruiz Ave",
+"city": "El Paso",
+"zip": "79936",
+"lon": -106.26990999957769,
+"lat": 31.745901999409195,
+"total_units": 112,
+"assisted_units": 112,
+"programs": [
+"LIHTC"
+],
+"hud_id": "TXA20060180"
+},
+{
+"name": "MISION DEL VALLE TOWNHOMES",
+"address": "621 Dindinger Rd",
+"city": "Socorro",
+"zip": "79927",
+"lon": -106.28529900008238,
+"lat": 31.615562998909887,
+"total_units": 16,
+"assisted_units": 16,
+"programs": [
+"LIHTC"
+],
+"hud_id": "TXA20030205"
+},
+{
+"name": "NORTH MOUNTAIN VILLAGE",
+"address": "9435 Diana Dr",
+"city": "El Paso",
+"zip": "79924",
+"lon": -106.42463100016136,
+"lat": 31.878111999075912,
+"total_units": 200,
+"assisted_units": 200,
+"programs": [
+"LIHTC"
+],
+"hud_id": "TXA20070245"
+},
+{
+"name": "NCDO HOUSING LTD",
+"address": "5250 Wren Ave",
+"city": "El Paso",
+"zip": "79924",
+"lon": -106.4177050001006,
+"lat": 31.8774659995345,
+"total_units": 31,
+"assisted_units": 0,
+"programs": [
+"LIHTC"
+],
+"hud_id": "TXA00000417"
+},
+{
+"name": "ARTSPACE EL PASO LOFTS",
+"address": "601 N Oregon St",
+"city": "El Paso",
+"zip": "79901",
+"lon": -106.49072900013932,
+"lat": 31.76107399913099,
+"total_units": 0,
+"assisted_units": 0,
+"programs": [
+"LIHTC"
+],
+"hud_id": "TXA00000006"
+},
+{
+"name": "BURGUNDY PALMS",
+"address": "9395 Betel Dr",
+"city": "El Paso",
+"zip": "79907",
+"lon": -106.30108699989692,
+"lat": 31.699100999421237,
+"total_units": 100,
+"assisted_units": 100,
+"programs": [
+"LIHTC"
+],
+"hud_id": "TXA20040025"
+},
+{
+"name": "MISSION PALMS",
+"address": "12140 Socorro Rd",
+"city": "San Elizario",
+"zip": "79849",
+"lon": -106.273781999862,
+"lat": 31.595187999490857,
+"total_units": 76,
+"assisted_units": 76,
+"programs": [
+"LIHTC"
+],
+"hud_id": "TXA20070230"
+},
+{
+"name": "MISSION PASS LTD",
+"address": "633 Dindinger Rd",
+"city": "Socorro",
+"zip": "79927",
+"lon": -106.28598699999554,
+"lat": 31.615279999076627,
+"total_units": 36,
+"assisted_units": 36,
+"programs": [
+"LIHTC"
+],
+"hud_id": "TXA20030215"
+},
+{
+"name": "ARROWHEAD PLACE LTD",
+"address": "5051 Trojan Dr",
+"city": "El Paso",
+"zip": "79924",
+"lon": -106.42420299964087,
+"lat": 31.91910499919875,
+"total_units": 24,
+"assisted_units": 24,
+"programs": [
+"LIHTC"
+],
+"hud_id": "TXA20020010"
+},
+{
+"name": "MISSOURI STREET RESIDENCE",
+"address": "526 W Missouri Ave",
+"city": "El Paso",
+"zip": "79901",
+"lon": -106.49381600042608,
+"lat": 31.75950299950488,
+"total_units": 42,
+"assisted_units": 42,
+"programs": [
+"LIHTC"
+],
+"hud_id": "TXA19930005"
+},
+{
+"name": "MOUNTAIN HEIGHTS LTD",
+"address": "3575 Lincoln Ave",
+"city": "El Paso",
+"zip": "79930",
+"lon": -106.45083900002922,
+"lat": 31.820137999126622,
+"total_units": 31,
+"assisted_units": 31,
+"programs": [
+"LIHTC"
+],
+"hud_id": "TXA20020175"
+},
+{
+"name": "SOUTH COOPERSTOWN APTS",
+"address": "5010 Sean Haggerty Dr",
+"city": "El Paso",
+"zip": "79924",
+"lon": -106.42317800034213,
+"lat": 31.929718998837146,
+"total_units": 20,
+"assisted_units": 20,
+"programs": [
+"LIHTC"
+],
+"hud_id": "TXA20030345"
+},
+{
+"name": "FONSECA LTD",
+"address": "627 Fonseca Dr",
+"city": "El Paso",
+"zip": "79905",
+"lon": -106.41701700018743,
+"lat": 31.754639999352438,
+"total_units": 14,
+"assisted_units": 14,
+"programs": [
+"LIHTC"
+],
+"hud_id": "TXA19970060"
+},
+{
+"name": "TAYS",
+"address": "2114 Magoffin Ave",
+"city": "El Paso",
+"zip": "79901",
+"lon": -106.46487100007583,
+"lat": 31.769562998874157,
+"total_units": 0,
+"assisted_units": 0,
+"programs": [
+"LIHTC"
+],
+"hud_id": "TXA00000078"
+},
+{
+"name": "TROPICANA PALMS",
+"address": "3710 Lee Blvd",
+"city": "El Paso",
+"zip": "79936",
+"lon": -106.29367700013749,
+"lat": 31.80097999887528,
+"total_units": 112,
+"assisted_units": 95,
+"programs": [
+"LIHTC"
+],
+"hud_id": "TXA20050405"
+},
+{
+"name": "SIERRA VISTA APTS - EL PASO",
+"address": "10501 Montwood Dr",
+"city": "El Paso",
+"zip": "79935",
+"lon": -106.33667200007768,
+"lat": 31.772322999006327,
+"total_units": 106,
+"assisted_units": 0,
+"programs": [
+"LIHTC"
+],
+"hud_id": "TXA00000537"
+},
+{
+"name": "TRES PALMAS",
+"address": "4470 Rich Beem",
+"city": "El Paso",
+"zip": "79938",
+"lon": -106.24756999979618,
+"lat": 31.814869998985618,
+"total_units": 172,
+"assisted_units": 172,
+"programs": [
+"LIHTC"
+],
+"hud_id": "TXA20100110"
+},
+{
+"name": "SUN PLAZA",
+"address": "1221 E San Antonio Ave",
+"city": "El Paso",
+"zip": "79901",
+"lon": -106.4768150000935,
+"lat": 31.761241999072812,
+"total_units": 330,
+"assisted_units": 330,
+"programs": [
+"LIHTC"
+],
+"hud_id": "TXA0000X180"
+},
+{
+"name": "SUNCREST APTS",
+"address": "611 Rubin Dr",
+"city": "El Paso",
+"zip": "79912",
+"lon": -106.52925699976846,
+"lat": 31.813154998800282,
+"total_units": 100,
+"assisted_units": 100,
+"programs": [
+"LIHTC"
+],
+"hud_id": "TXA20100100"
+},
+{
+"name": "GATEWAY EAST APTS (EL PASO)",
+"address": "1222 Giles Rd",
+"city": "El Paso",
+"zip": "79915",
+"lon": -106.35555100037696,
+"lat": 31.75658899942037,
+"total_units": 104,
+"assisted_units": 104,
+"programs": [
+"LIHTC"
+],
+"hud_id": "TXA20030135"
+},
+{
+"name": "GOOD SAMARITAN TOWERS",
+"address": "7750 Lilac Way",
+"city": "El Paso",
+"zip": "79915",
+"lon": -106.35050800030574,
+"lat": 31.74008199886611,
+"total_units": 100,
+"assisted_units": 100,
+"programs": [
+"LIHTC"
+],
+"hud_id": "TXA00001013"
+},
+{
+"name": "TIERRA SOCORRO LTD",
+"address": "560 Three Missions Dr",
+"city": "Socorro",
+"zip": "79927",
+"lon": -106.27273800029667,
+"lat": 31.656016999447413,
+"total_units": 64,
+"assisted_units": 64,
+"programs": [
+"LIHTC"
+],
+"hud_id": "TXA20000180"
+},
+{
+"name": "JOSE ANTONIO ESCAJEDA APTS",
+"address": "204 Alicia Dr",
+"city": "El Paso",
+"zip": "79905",
+"lon": -106.42973899963161,
+"lat": 31.766722998778516,
+"total_units": 88,
+"assisted_units": 0,
+"programs": [
+"LIHTC"
+],
+"hud_id": "TXA00000346"
+},
+{
+"name": "SPANISH CREEK TOWNHOMES",
+"address": "610 N Lee Trevino Dr",
+"city": "El Paso",
+"zip": "79907",
+"lon": -106.33187500005376,
+"lat": 31.721236999331246,
+"total_units": 129,
+"assisted_units": 0,
+"programs": [
+"LIHTC"
+],
+"hud_id": "TXA00000544"
+},
+{
+"name": "HOMESTEAD PALMS",
+"address": "14597 Santiesteban Ln",
+"city": "El Paso",
+"zip": "79938",
+"lon": -106.1729029999674,
+"lat": 31.806140999307416,
+"total_units": 0,
+"assisted_units": 0,
+"programs": [
+"LIHTC"
+],
+"hud_id": "TXA00000041"
+},
+{
+"name": "TIGUA VILLAGE APTS",
+"address": "8017 San Jose Rd",
+"city": "El Paso",
+"zip": "79915",
+"lon": -106.35305099972103,
+"lat": 31.727143999126813,
+"total_units": 186,
+"assisted_units": 186,
+"programs": [
+"LIHTC"
+],
+"hud_id": "TXA20010220"
+},
+{
+"name": "SUNSET PALMS APTS",
+"address": "6149 S Desert Blvd",
+"city": "El Paso",
+"zip": "79932",
+"lon": -106.58077200005398,
+"lat": 31.876935999133092,
+"total_units": 36,
+"assisted_units": 36,
+"programs": [
+"LIHTC"
+],
+"hud_id": "TXA20030360"
+},
+{
+"name": "HORIZON PALMS",
+"address": "12199 Darrington Rd",
+"city": "Horizon City",
+"zip": "79928",
+"lon": -106.17423199993807,
+"lat": 31.647476999021382,
+"total_units": 76,
+"assisted_units": 76,
+"programs": [
+"LIHTC"
+],
+"hud_id": "TXA20060185"
+},
+{
+"name": "GERONIMO TRAIL TOWNHOMES",
+"address": "1401 Geronimo Dr",
+"city": "El Paso",
+"zip": "79925",
+"lon": -106.4136369999977,
+"lat": 31.787673999297244,
+"total_units": 22,
+"assisted_units": 22,
+"programs": [
+"LIHTC"
+],
+"hud_id": "TXA20030140"
+},
+{
+"name": "THIRD & FLORENCE",
+"address": "609 E 3rd Ave",
+"city": "El Paso",
+"zip": "79901",
+"lon": -106.4827369998736,
+"lat": 31.755635998916823,
+"total_units": 7,
+"assisted_units": 7,
+"programs": [
+"LIHTC"
+],
+"hud_id": "TXA19910465"
+},
+{
+"name": "THOMAS WESTFALL MEMORIAL APARTMENTS",
+"address": "10700 Vista Del Sol Dr",
+"city": "El Paso",
+"zip": "79935",
+"lon": -106.33961799989912,
+"lat": 31.754862999374616,
+"total_units": 90,
+"assisted_units": 90,
+"programs": [
+"LIHTC"
+],
+"hud_id": "TXA00001059"
+},
+{
+"name": "FATHER CARLOS PINTO MEMORIAL APARTMENTS",
+"address": "1001 S Ochoa St",
+"city": "El Paso",
+"zip": "79901",
+"lon": -106.47948499973039,
+"lat": 31.75145499881037,
+"total_units": 113,
+"assisted_units": 113,
+"programs": [
+"LIHTC"
+],
+"hud_id": "TXA0000X019"
+},
+{
+"name": "GEORGE W. BAINES APARTMENTS",
+"address": "10661 Vista Del Sol Dr",
+"city": "El Paso",
+"zip": "79935",
+"lon": -106.34004399987147,
+"lat": 31.7554219987885,
+"total_units": 58,
+"assisted_units": 58,
+"programs": [
+"LIHTC"
+],
+"hud_id": "TXA0000X025"
+},
+{
+"name": "FRANKLIN PLACE TOWNHOMES",
+"address": "600 Belvidere St",
+"city": "El Paso",
+"zip": "79912",
+"lon": -106.55664499964409,
+"lat": 31.849928999077694,
+"total_units": 96,
+"assisted_units": 96,
+"programs": [
+"LIHTC"
+],
+"hud_id": "TXA19990075"
+},
+{
+"name": "JUDSON WILLIAMS APARTMENTS",
+"address": "314 N Resler Dr",
+"city": "El Paso",
+"zip": "79912",
+"lon": -106.54857499956054,
+"lat": 31.84170899931887,
+"total_units": 24,
+"assisted_units": 24,
+"programs": [
+"LIHTC"
+],
+"hud_id": "TXA0000X036"
+},
+{
+"name": "PRESIDIO DOLORES APTS",
+"address": "12473 Cuatro Aces Cir",
+"city": "San Elizario",
+"zip": "79849",
+"lon": -106.26913700017403,
+"lat": 31.59810599878131,
+"total_units": 145,
+"assisted_units": 145,
+"programs": [
+"LIHTC"
+],
+"hud_id": "TXA20120812"
+},
+{
+"name": "WESTERN SUNSHINE PASS LTD",
+"address": "1421 Geronimo Dr",
+"city": "El Paso",
+"zip": "79925",
+"lon": -106.41381600009784,
+"lat": 31.788489999115644,
+"total_units": 36,
+"assisted_units": 36,
+"programs": [
+"LIHTC"
+],
+"hud_id": "TXA20030430"
+},
+{
+"name": "WESTERN YARBROUGH APTS",
+"address": "625 S Yarbrough Dr",
+"city": "El Paso",
+"zip": "79915",
+"lon": -106.36724699979916,
+"lat": 31.712854999530833,
+"total_units": 32,
+"assisted_units": 32,
+"programs": [
+"LIHTC"
+],
+"hud_id": "TXA19970230"
+},
+{
+"name": "RIVER PALMS",
+"address": "14001 Pebble Hills Blvd",
+"city": "El Paso",
+"zip": "79938",
+"lon": -106.23870800004241,
+"lat": 31.782334999395903,
+"total_units": 152,
+"assisted_units": 116,
+"programs": [
+"LIHTC"
+],
+"hud_id": "TXA0000X076"
+},
+{
+"name": "SHERMAN PLAZA",
+"address": "4528 Blanco Ave",
+"city": "El Paso",
+"zip": "79905",
+"lon": -106.43558400031714,
+"lat": 31.76593199929107,
+"total_units": 178,
+"assisted_units": 178,
+"programs": [
+"LIHTC"
+],
+"hud_id": "TXA00001049"
+},
+{
+"name": "PUEBLO MONTANA",
+"address": "12060 Montana Ave",
+"city": "El Paso",
+"zip": "79936",
+"lon": -106.272098999889,
+"lat": 31.805622999246275,
+"total_units": 36,
+"assisted_units": 36,
+"programs": [
+"LIHTC"
+],
+"hud_id": "TXA20040250"
+},
+{
+"name": "PASEO PALMS",
+"address": "910 Sun Fire St",
+"city": "El Paso",
+"zip": "79928",
+"lon": -106.25691600014694,
+"lat": 31.727467999092674,
+"total_units": 180,
+"assisted_units": 0,
+"programs": [
+"LIHTC"
+],
+"hud_id": "TXA00000445"
+},
+{
+"name": "PRESIDIO PALMS",
+"address": "12960 Alnor St",
+"city": "San Elizario",
+"zip": "79849",
+"lon": -106.26951100026783,
+"lat": 31.579665999462737,
+"total_units": 80,
+"assisted_units": 80,
+"programs": [
+"LIHTC"
+],
+"hud_id": "TXA20100070"
+},
+{
+"name": "PRESIDIO PALMS II",
+"address": "12950 Alnor St",
+"city": "San Elizario",
+"zip": "79849",
+"lon": -106.26943500009986,
+"lat": 31.579735999411348,
+"total_units": 80,
+"assisted_units": 80,
+"programs": [
+"LIHTC"
+],
+"hud_id": "TXA20120854"
+},
+{
+"name": "PRADO LTD",
+"address": "151 S Prado Rd",
+"city": "El Paso",
+"zip": "79907",
+"lon": -106.34467299966595,
+"lat": 31.70520899920004,
+"total_units": 64,
+"assisted_units": 64,
+"programs": [
+"LIHTC"
+],
+"hud_id": "TXA19990155"
+},
+{
+"name": "PATRIOT HILLS LTD",
+"address": "5725 Fairbanks Dr",
+"city": "El Paso",
+"zip": "79924",
+"lon": -106.40833000033582,
+"lat": 31.90090399915018,
+"total_units": 22,
+"assisted_units": 22,
+"programs": [
+"LIHTC"
+],
+"hud_id": "TXA20020210"
+},
+{
+"name": "PATRIOT PALMS",
+"address": "4980 Sean Haggerty Dr",
+"city": "El Paso",
+"zip": "79934",
+"lon": -106.42307500040997,
+"lat": 31.92985299932163,
+"total_units": 188,
+"assisted_units": 0,
+"programs": [
+"LIHTC"
+],
+"hud_id": "TXA00000446"
+},
+{
+"name": "SAN ELIZARIO PALMS",
+"address": "13850 Socorro Rd",
+"city": "San Elizario",
+"zip": "79849",
+"lon": -106.2440070002067,
+"lat": 31.565352998799217,
+"total_units": 80,
+"assisted_units": 80,
+"programs": [
+"LIHTC"
+],
+"hud_id": "TXA20100080"
+},
+{
+"name": "RIO GRANDE",
+"address": "212 Lisbon St",
+"city": "El Paso",
+"zip": "79905",
+"lon": -106.42451599963532,
+"lat": 31.765988998918267,
+"total_units": 66,
+"assisted_units": 66,
+"programs": [
+"LIHTC"
+],
+"hud_id": "TXA0000X075"
+},
+{
+"name": "SAUL KLEINFELD LTD",
+"address": "1871 Saul Kleinfeld Dr",
+"city": "El Paso",
+"zip": "79936",
+"lon": -106.28519500032532,
+"lat": 31.765725998858375,
+"total_units": 30,
+"assisted_units": 30,
+"programs": [
+"LIHTC"
+],
+"hud_id": "TXA19970155"
+},
+{
+"name": "YSLETA DEL SUR PUEBLO HOMES I",
+"address": "332 Alton Griffin St",
+"city": "Ysleta Del Sur Pueblo",
+"zip": "79907",
+"lon": -106.32329399960905,
+"lat": 31.68402799939577,
+"total_units": 60,
+"assisted_units": 60,
+"programs": [
+"LIHTC"
+],
+"hud_id": "TXA20100125"
+},
+{
+"name": "WESTERN CROSBY LTD",
+"address": "5010 Raymond Telles Dr",
+"city": "El Paso",
+"zip": "79924",
+"lon": -106.420142000109,
+"lat": 31.87506899886965,
+"total_units": 56,
+"assisted_units": 56,
+"programs": [
+"LIHTC"
+],
+"hud_id": "TXA19990270"
+},
+{
+"name": "WESTERN EASTSIDE SENIORS, LTD",
+"address": "2975 Lee Blvd",
+"city": "El Paso",
+"zip": "79936",
+"lon": -106.29387200013115,
+"lat": 31.78270899940378,
+"total_units": 19,
+"assisted_units": 0,
+"programs": [
+"LIHTC"
+],
+"hud_id": "TXA00000617"
+},
+{
+"name": "WESTERN GALLAGHER II",
+"address": "450 Gallagher St",
+"city": "El Paso",
+"zip": "79915",
+"lon": -106.3520480001636,
+"lat": 31.734987999466888,
+"total_units": 9,
+"assisted_units": 0,
+"programs": [
+"LIHTC"
+],
+"hud_id": "TXA00000618"
+},
+{
+"name": "WHISPERING SANDS TOWNHOMES",
+"address": "500 Omar St",
+"city": "Anthony",
+"zip": "79821",
+"lon": -106.60831599956522,
+"lat": 31.99786999929101,
+"total_units": 36,
+"assisted_units": 36,
+"programs": [
+"LIHTC"
+],
+"hud_id": "TXA20040410"
+},
+{
+"name": "WOODCHASE SENIOR COMMUNITY",
+"address": "8410 Tigris Dr",
+"city": "El Paso",
+"zip": "79907",
+"lon": -106.32918699997516,
+"lat": 31.723215998914238,
+"total_units": 128,
+"assisted_units": 0,
+"programs": [
+"LIHTC"
+],
+"hud_id": "TXA00000630"
+},
+{
+"name": "WESTERN CAROLINA LTD",
+"address": "900 N Carolina Dr",
+"city": "El Paso",
+"zip": "79915",
+"lon": -106.35218500043094,
+"lat": 31.741326999501176,
+"total_units": 56,
+"assisted_units": 56,
+"programs": [
+"LIHTC"
+],
+"hud_id": "TXA19990265"
+},
+{
+"name": "WESTERN PEBBLE HILLS, LTD",
+"address": "11490 Pebble Hills Blvd",
+"city": "El Paso",
+"zip": "79936",
+"lon": -106.29490700037395,
+"lat": 31.782256998889235,
+"total_units": 30,
+"assisted_units": 30,
+"programs": [
+"LIHTC"
+],
+"hud_id": "TXA19980265"
+},
+{
+"name": "WESTERN PELLICANO",
+"address": "11976 Pellicano Dr",
+"city": "El Paso",
+"zip": "79936",
+"lon": -106.28674000020607,
+"lat": 31.734400999389862,
+"total_units": 30,
+"assisted_units": 30,
+"programs": [
+"LIHTC"
+],
+"hud_id": "TXA19980270"
+},
+{
+"name": "WESTERN REDD APTS",
+"address": "610 E Redd Rd",
+"city": "El Paso",
+"zip": "79912",
+"lon": -106.56333300005349,
+"lat": 31.85970299950531,
+"total_units": 30,
+"assisted_units": 30,
+"programs": [
+"LIHTC"
+],
+"hud_id": "TXA19970225"
+},
+{
+"name": "WESTERN BURGUNDY LTD",
+"address": "815 Burgundy Dr",
+"city": "El Paso",
+"zip": "79907",
+"lon": -106.30772500007762,
+"lat": 31.695160998803896,
+"total_units": 64,
+"assisted_units": 64,
+"programs": [
+"LIHTC"
+],
+"hud_id": "TXA19990260"
+}
+],
+"by_bg": {
+"481410102124": {
+"properties": 1,
+"assisted_units": 16,
+"total_units": 16
+},
+"481410043094": {
+"properties": 1,
+"assisted_units": 128,
+"total_units": 160
+},
+"481410002072": {
+"properties": 1,
+"assisted_units": 152,
+"total_units": 152
+},
+"481410037022": {
+"properties": 1,
+"assisted_units": 94,
+"total_units": 94
+},
+"481410001141": {
+"properties": 2,
+"assisted_units": 236,
+"total_units": 236
+},
+"481410020003": {
+"properties": 1,
+"assisted_units": 0,
+"total_units": 76
+},
+"481410012043": {
+"properties": 1,
+"assisted_units": 100,
+"total_units": 100
+},
+"481410103712": {
+"properties": 1,
+"assisted_units": 36,
+"total_units": 36
+},
+"481410001081": {
+"properties": 1,
+"assisted_units": 120,
+"total_units": 152
+},
+"481410039041": {
+"properties": 1,
+"assisted_units": 63,
+"total_units": 63
+},
+"481410033003": {
+"properties": 1,
+"assisted_units": 330,
+"total_units": 330
+},
+"481410102283": {
+"properties": 1,
+"assisted_units": 172,
+"total_units": 172
+},
+"481410102031": {
+"properties": 1,
+"assisted_units": 26,
+"total_units": 26
+},
+"481410001142": {
+"properties": 1,
+"assisted_units": 100,
+"total_units": 100
+},
+"481410017001": {
+"properties": 3,
+"assisted_units": 154,
+"total_units": 184
+},
+"481410041032": {
+"properties": 2,
+"assisted_units": 104,
+"total_units": 233
+},
+"481410103031": {
+"properties": 1,
+"assisted_units": 92,
+"total_units": 92
+},
+"481410104041": {
+"properties": 1,
+"assisted_units": 20,
+"total_units": 20
+},
+"481410102232": {
+"properties": 1,
+"assisted_units": 70,
+"total_units": 152
+},
+"481410041052": {
+"properties": 4,
+"assisted_units": 306,
+"total_units": 315
+},
+"481410043143": {
+"properties": 1,
+"assisted_units": 56,
+"total_units": 56
+},
+"481410039042": {
+"properties": 1,
+"assisted_units": 95,
+"total_units": 112
+},
+"481410003014": {
+"properties": 1,
+"assisted_units": 36,
+"total_units": 36
+},
+"481410103271": {
+"properties": 2,
+"assisted_units": 49,
+"total_units": 49
+},
+"481410043161": {
+"properties": 1,
+"assisted_units": 0,
+"total_units": 24
+},
+"481410103382": {
+"properties": 2,
+"assisted_units": 78,
+"total_units": 82
+},
+"481410103362": {
+"properties": 1,
+"assisted_units": 112,
+"total_units": 112
+},
+"481410104113": {
+"properties": 2,
+"assisted_units": 52,
+"total_units": 52
+},
+"481410002053": {
+"properties": 1,
+"assisted_units": 0,
+"total_units": 31
+},
+"481410040081": {
+"properties": 1,
+"assisted_units": 100,
+"total_units": 100
+},
+"481410104061": {
+"properties": 1,
+"assisted_units": 76,
+"total_units": 76
+},
+"481410001061": {
+"properties": 1,
+"assisted_units": 24,
+"total_units": 24
+},
+"481410016004": {
+"properties": 1,
+"assisted_units": 42,
+"total_units": 42
+},
+"481410008002": {
+"properties": 1,
+"assisted_units": 31,
+"total_units": 31
+},
+"481410001063": {
+"properties": 2,
+"assisted_units": 20,
+"total_units": 208
+},
+"481410036011": {
+"properties": 1,
+"assisted_units": 14,
+"total_units": 14
+},
+"481410028001": {
+"properties": 1,
+"assisted_units": 0,
+"total_units": 0
+},
+"481410103223": {
+"properties": 1,
+"assisted_units": 95,
+"total_units": 112
+},
+"481410103076": {
+"properties": 1,
+"assisted_units": 0,
+"total_units": 106
+},
+"481410103582": {
+"properties": 1,
+"assisted_units": 172,
+"total_units": 172
+},
+"481410021002": {
+"properties": 1,
+"assisted_units": 330,
+"total_units": 330
+},
+"481410011151": {
+"properties": 1,
+"assisted_units": 100,
+"total_units": 100
+},
+"481410042021": {
+"properties": 1,
+"assisted_units": 104,
+"total_units": 104
+},
+"481410104081": {
+"properties": 1,
+"assisted_units": 64,
+"total_units": 64
+},
+"481410031001": {
+"properties": 2,
+"assisted_units": 66,
+"total_units": 154
+},
+"481410103652": {
+"properties": 1,
+"assisted_units": 0,
+"total_units": 0
+},
+"481410035021": {
+"properties": 1,
+"assisted_units": 186,
+"total_units": 186
+},
+"481410102272": {
+"properties": 1,
+"assisted_units": 36,
+"total_units": 36
+},
+"481410103341": {
+"properties": 1,
+"assisted_units": 76,
+"total_units": 76
+},
+"481410034022": {
+"properties": 2,
+"assisted_units": 58,
+"total_units": 58
+},
+"481410019001": {
+"properties": 1,
+"assisted_units": 7,
+"total_units": 7
+},
+"481410043124": {
+"properties": 1,
+"assisted_units": 90,
+"total_units": 90
+},
+"481410019003": {
+"properties": 1,
+"assisted_units": 113,
+"total_units": 113
+},
+"481410043122": {
+"properties": 1,
+"assisted_units": 58,
+"total_units": 58
+},
+"481410011123": {
+"properties": 1,
+"assisted_units": 96,
+"total_units": 96
+},
+"481410011192": {
+"properties": 1,
+"assisted_units": 24,
+"total_units": 24
+},
+"481410104132": {
+"properties": 1,
+"assisted_units": 145,
+"total_units": 145
+},
+"481410038013": {
+"properties": 1,
+"assisted_units": 32,
+"total_units": 32
+},
+"481410103673": {
+"properties": 1,
+"assisted_units": 116,
+"total_units": 152
+},
+"481410030004": {
+"properties": 1,
+"assisted_units": 178,
+"total_units": 178
+},
+"481410103511": {
+"properties": 1,
+"assisted_units": 36,
+"total_units": 36
+},
+"481410103702": {
+"properties": 1,
+"assisted_units": 0,
+"total_units": 180
+},
+"481410104121": {
+"properties": 2,
+"assisted_units": 160,
+"total_units": 160
+},
+"481410038043": {
+"properties": 1,
+"assisted_units": 64,
+"total_units": 64
+},
+"481410001102": {
+"properties": 1,
+"assisted_units": 22,
+"total_units": 22
+},
+"481410105014": {
+"properties": 1,
+"assisted_units": 80,
+"total_units": 80
+},
+"481410043193": {
+"properties": 1,
+"assisted_units": 30,
+"total_units": 30
+},
+"481410039022": {
+"properties": 1,
+"assisted_units": 60,
+"total_units": 60
+},
+"481410002062": {
+"properties": 1,
+"assisted_units": 56,
+"total_units": 56
+},
+"481410103231": {
+"properties": 1,
+"assisted_units": 0,
+"total_units": 19
+},
+"481410102032": {
+"properties": 1,
+"assisted_units": 36,
+"total_units": 36
+},
+"481410041034": {
+"properties": 1,
+"assisted_units": 0,
+"total_units": 128
+},
+"481410012022": {
+"properties": 1,
+"assisted_units": 30,
+"total_units": 30
+},
+"481410040043": {
+"properties": 1,
+"assisted_units": 64,
+"total_units": 64
+}
+},
+"mf_county_summary": {
+"n_properties": 72,
+"assisted_units": 5086,
+"note": "HUD Multifamily Properties (incl. project-based Section 8, 202/811) for El Paso -- not geocoded by HUD, county total only, not mapped."
+}
+}

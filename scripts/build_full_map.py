@@ -11,6 +11,7 @@ BASE = "/tmp/claude-0/-home-claude/b146bc85-bf48-59da-a6cf-542322a888e1/scratchp
 bg_geo = json.load(open(f"{BASE}/bg_test.geojson"))
 bg_table = {r["GEOID"]: r for r in json.load(open(f"{BASE}/bg_table.json"))}
 mva = {r["GEOID"]: r for r in json.load(open(f"{BASE}/mva_result.json"))["block_groups"]}
+subsidized_by_bg = json.load(open(f"{BASE}/subsidized_housing.json"))["by_bg"]
 
 TYPE_LABELS = {
     "A": "Highest Value / Strongest Market", "B": "Strong Market",
@@ -65,6 +66,10 @@ for f in bg_geo["features"]:
                 missing.append(label)
         props["missing_indicators"] = missing
         n_insufficient += 1
+
+    sub = subsidized_by_bg.get(geoid, {})
+    props["subsidized_properties"] = sub.get("properties", 0)
+    props["subsidized_units"] = sub.get("assisted_units", 0)
 
     feats.append({"type": "Feature", "geometry": f["geometry"], "properties": props})
 

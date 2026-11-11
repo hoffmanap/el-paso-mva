@@ -83,6 +83,8 @@ header{
 .leg-n{margin-left:auto; color:var(--ink-dim); font-variant-numeric:tabular-nums; font-size:11.5px}
 .leg-divider{height:1px; background:var(--line); margin:6px 0}
 .leg-sw-hatch{background-image:repeating-linear-gradient(45deg, var(--ink-dim) 0 1.5px, transparent 1.5px 4px); background-color:var(--insuff-fill); opacity:.8}
+.leg-sw-dot{background:var(--gold); border-radius:50%; border:1.5px solid #fff; box-shadow:0 0 0 1px rgba(0,0,0,.2)}
+.leg-note{font-size:10.5px; color:var(--ink-dim); margin-top:2px; padding-left:2px}
 
 #statbar{
   position:absolute; top:12px; right:max(12px, env(safe-area-inset-right,0px)); z-index:20;
@@ -180,6 +182,8 @@ header{
     <div id="legend">
       <h3>Market Type</h3>
       <div id="legend-rows"></div>
+      <div class="leg-divider"></div>
+      <div id="overlay-rows"></div>
     </div>
     <div id="empty-hint">Tap a block group to see its indicators</div>
     <div id="panel">
@@ -216,7 +220,8 @@ header{
         Code enforcement &mdash; City of El Paso case list (Nov 2024), filtered to physical-blight categories, geocoded via Census Bureau batch geocoder<br>
         Foreclosures &mdash; El Paso County Clerk's live Foreclosure Map feed, snapshotted monthly (see below)<br>
         Demographics &amp; housing stock &mdash; ACS 2020&ndash;2024 5-year estimates (via Census Reporter), block-group level<br>
-        Geography &mdash; US Census TIGERweb, El Paso County block groups
+        Geography &mdash; US Census TIGERweb, El Paso County block groups<br>
+        Subsidized housing &mdash; HUD LIHTC Properties database (live ArcGIS feed), 88 El Paso County properties / 5,888 low-income units
         <br><br>
         <strong>Foreclosures:</strong> the county's searchable foreclosure form is CAPTCHA-gated and only returns legal
         descriptions, not addresses or coordinates. A companion map feed on the same county site is open and geocoded,
@@ -224,8 +229,16 @@ header{
         one static pull, a scheduled job snapshots it monthly and accumulates a real history over time. Not yet
         enough months of data to use as a clustering input; this will fold in once a meaningful history builds up.
         <br><br>
-        <strong>Known gaps vs. a full MVA:</strong> no subsidized-housing layer; foreclosure history still accumulating
-        (see above).
+        <strong>Subsidized housing:</strong> HUD's Low-Income Housing Tax Credit (LIHTC) database is a live, geocoded,
+        nationwide feed &mdash; pulled in here as gold dots (88 El Paso County properties, 5,888 low-income units). Also
+        checked: HUD's Multifamily Properties database, which includes project-based Section 8 and 202/811 elderly &amp;
+        disabled housing &mdash; it lists 72 El Paso properties (~5,100 assisted units) but HUD does not publish geocoded
+        coordinates for this layer, so it's a county-level count, not a mappable one. Tenant-based Section 8 (Housing
+        Choice Vouchers) isn't public at any address level &mdash; voucher-holder locations are individual-household data
+        HUD doesn't release.
+        <br><br>
+        <strong>Known gaps vs. a full MVA:</strong> foreclosure history still accumulating (see above); subsidized-housing
+        share isn't yet folded into the clustering model itself, just shown as an overlay.
       </div>
     </div>
   </div>
@@ -311,6 +324,30 @@ function styleFor(feature){
     fillOpacity: on ? 0.72 : 0.06,
     opacity: on ? 1 : 0.15
   };
+}
+
+let subsidizedOn = true;
+function renderOverlayToggle(nProps, nUnits){
+  const el = document.getElementById('overlay-rows');
+  if(!el) return;
+  el.innerHTML = '';
+  const row = document.createElement('div');
+  row.className = 'leg-row' + (subsidizedOn ? '' : ' dim');
+  row.innerHTML = `<span class="leg-sw leg-sw-dot"></span>
+    <span class="leg-label">Subsidized housing (LIHTC)</span>
+    <span class="leg-n">${nProps}</span>`;
+  row.onclick = ()=>{
+    subsidizedOn = !subsidizedOn;
+    if(subsidizedLayer){
+      if(subsidizedOn) map.addLayer(subsidizedLayer); else map.removeLayer(subsidizedLayer);
+    }
+    renderOverlayToggle(nProps, nUnits);
+  };
+  el.appendChild(row);
+  const note = document.createElement('div');
+  note.className = 'leg-note';
+  note.textContent = `${fmt(nUnits)} low-income units across ${nProps} properties`;
+  el.appendChild(note);
 }
 
 function renderLegend(counts, total){
@@ -403,6 +440,10 @@ function openPanel(p){
       ${bar('Permits /1k', (p.permits_per_1000_units||0)/maxPermit*100, 'var(--mA)', fmt(p.permits_per_1000_units,1))}
       ${bar('Violations /1k', (p.violations_per_1000_units||0)/maxViol*100, 'var(--mF)', fmt(p.violations_per_1000_units,1))}
     </div>
+    ${p.subsidized_properties ? `<div style="margin-top:12px; padding:9px 11px; background:var(--paper-dim); border-radius:8px; font-size:12px; color:var(--ink-dim)">
+         <strong style="color:var(--ink)">${fmt(p.subsidized_properties)} LIHTC propert${p.subsidized_properties===1?'y':'ies'}</strong> in this block group
+         &middot; ${fmt(p.subsidized_units)} low-income units
+       </div>` : ''}
     <div style="margin-top:14px; font-size:11px; color:var(--ink-dim)">
       GEOID ${p.GEOID} &middot; composite score ${fmt(p.composite_score,2)} &middot; ${fmt(p.permit_count)} permits, ${fmt(p.violation_count)} violations recorded
     </div>
@@ -417,7 +458,12 @@ document.getElementById('about-btn').onclick = ()=> document.getElementById('abo
 document.getElementById('about-close').onclick = ()=> document.getElementById('about').classList.remove('open');
 document.getElementById('about').addEventListener('click', (e)=>{ if(e.target.id==='about') e.currentTarget.classList.remove('open'); });
 
-fetch('mva_map.geojson').then(r=>r.json()).then(data=>{
+let subsidizedLayer = null;
+
+Promise.all([
+  fetch('mva_map.geojson').then(r=>r.json()),
+  fetch('subsidized_housing.json').then(r=>r.json()).catch(()=>null)
+]).then(([data, sub])=>{
   geo = data;
   const counts = {};
   DISPLAY_ORDER.forEach(t=>counts[t]=0);
@@ -443,5 +489,20 @@ fetch('mva_map.geojson').then(r=>r.json()).then(data=>{
   renderLegend(counts, data.features.length);
   renderStats(data.features.filter(f=>f.properties.data_sufficient));
   document.getElementById('count-pill').textContent = data.features.length + ' block groups';
+
+  if(sub && sub.points && sub.points.length){
+    subsidizedLayer = L.layerGroup(sub.points.map(p=>{
+      const m = L.circleMarker([p.lat, p.lon], {
+        radius: 5, weight: 1.5, color: '#fff',
+        fillColor: resolveVar('--gold'), fillOpacity: 0.95
+      });
+      m.bindTooltip(
+        `<strong>${p.name || 'LIHTC property'}</strong><br>${p.address}<br>${fmt(p.assisted_units)} low-income units`,
+        {sticky:true}
+      );
+      return m;
+    })).addTo(map);
+    renderOverlayToggle(sub.points.length, sub.points.reduce((s,p)=>s+(p.assisted_units||0),0));
+  }
 });
 </script>
