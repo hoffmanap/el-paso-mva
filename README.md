@@ -6,7 +6,7 @@ methodology: a data-based, internally-referenced index of residential real
 estate markets, clustered at the Census block group level to surface
 investment-relevant variation that neighborhood-level studies miss.
 
-**[View the live dashboard →](index.html)** (open via GitHub Pages once enabled, or the published Claude artifact)
+**[View the live dashboard →](https://hoffmanap.github.io/el-paso-mva/)**
 
 ## What it does
 

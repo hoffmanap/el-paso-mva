@@ -461,8 +461,8 @@ document.getElementById('about').addEventListener('click', (e)=>{ if(e.target.id
 let subsidizedLayer = null;
 
 Promise.all([
-  fetch('mva_map.geojson').then(r=>r.json()),
-  fetch('subsidized_housing.json').then(r=>r.json()).catch(()=>null)
+  fetch('data/mva_map.geojson').then(r=>r.json()),
+  fetch('data/subsidized_housing.json').then(r=>r.json()).catch(()=>null)
 ]).then(([data, sub])=>{
   geo = data;
   const counts = {};
